@@ -26,6 +26,7 @@ const render = (item) => {
 
 //可新增代辦事項
 btn_add.addEventListener("click", (e) => {
+  e.preventDefault();
   if (add_Input.value.trim() == "") {
     alert("請填寫代辦事項");
     return;
