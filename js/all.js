@@ -26,12 +26,10 @@ const render = (item) => {
 
 //可新增代辦事項
 btn_add.addEventListener("click", (e) => {
-  e.preventDefault();
   if (add_Input.value.trim() == "") {
     alert("請填寫代辦事項");
     return;
   }
-  undone_count++;
   let obj = {};
   obj.content = add_Input.value.trim();
   obj.checked = "";
@@ -50,8 +48,8 @@ btn_add.addEventListener("click", (e) => {
 });
 
 //按enter可以新增一筆代辦事項，e.code改為e.key，使英文與數字鍵盤的 Enter 均納入監聽範圍
-container.addEventListener("keyup", function (e) {
-  if (e.key == "Enter") {
+container.addEventListener("keyup",function(e){
+  if(e.key == "Enter"){
     btn_add.click();
   }
 });
@@ -64,10 +62,6 @@ list.addEventListener("click", (e) => {
   e.preventDefault();
   if (e.target.getAttribute("class") == "delete") {
     let num = e.target.getAttribute("data-num"); //需要與刪除是同一個nodeName
-    //已完成並進行刪除時，會使 count 變為-1的程式碼調整，改成e.target為checked情況下才會--
-    if (e.target.getAttribute("checked") === "checked") {
-      undone_count--;
-    }
     item.splice(num, 1);
   } else {
     //待辦事項會有狀態（完成與否），可透過 checkbox 來切換
@@ -77,10 +71,8 @@ list.addEventListener("click", (e) => {
         //判斷當狀態為已完成，點完會變成待完成
         if (i.checked === "checked") {
           i.checked = "";
-          undone_count++;
         } else {
           i.checked = "checked";
-          undone_count--;
         }
       }
     });
@@ -98,7 +90,7 @@ let done_item = [];
 let delete_item = [];
 
 tab_list.addEventListener("click", (e) => {
-  if (e.target == tab_undone) {
+  if (e.target == tab_undone ) {
     tab_undone.setAttribute("class", "active");
     tab_all.className = "";
     tab_done.className = "";
@@ -107,7 +99,7 @@ tab_list.addEventListener("click", (e) => {
     render(undone_item);
   } else if (e.target == tab_done) {
     tab_undone.className = "";
-    tab_all.className = "";
+    tab_all.className = "";  
     tab_done.setAttribute("class", "active");
     //下方切換清單顯示的部分整合進來
     done_item = item.filter((i) => i.checked === "checked");
@@ -155,10 +147,18 @@ card_list.addEventListener("click", (e) => {
   }
 });
 
-//X個待完成項目，在新增、取消勾選完成加上undone_count++，在按叉叉刪除、勾選完成加上undone_count--
+//X個待完成項目，一樣是放在container內的監聽，先確認item是否為空，不為空就以filter篩選出待完成，用.length取數量，再賦予到undone_count上
 const p = document.querySelector(".list_footer > p");
 p.textContent = "0個待完成項目";
 container.addEventListener("click", function () {
-  p.textContent = `${undone_count}個待完成項目`;
+  if (item !== ""){
+    done_item = item.filter(i => i.checked === "");
+    undone_count = done_item.length
+    p.textContent = `${undone_count}個待完成項目`;
+  }
+  else{
+    return
+  }
 });
+
 render(item);
