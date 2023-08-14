@@ -50,8 +50,8 @@ btn_add.addEventListener("click", (e) => {
 });
 
 //按enter可以新增一筆代辦事項，e.code改為e.key，使英文與數字鍵盤的 Enter 均納入監聽範圍
-container.addEventListener("keyup",function(e){
-  if(e.key == "Enter"){
+container.addEventListener("keyup", function (e) {
+  if (e.key == "Enter") {
     btn_add.click();
   }
 });
@@ -65,7 +65,7 @@ list.addEventListener("click", (e) => {
   if (e.target.getAttribute("class") == "delete") {
     let num = e.target.getAttribute("data-num"); //需要與刪除是同一個nodeName
     //已完成並進行刪除時，會使 count 變為-1的程式碼調整，改成e.target為checked情況下才會--
-    if (e.target.getAttribute("checked") === "checked"){ 
+    if (e.target.getAttribute("checked") === "checked") {
       undone_count--;
     }
     item.splice(num, 1);
@@ -98,7 +98,7 @@ let done_item = [];
 let delete_item = [];
 
 tab_list.addEventListener("click", (e) => {
-  if (e.target == tab_undone ) {
+  if (e.target == tab_undone) {
     tab_undone.setAttribute("class", "active");
     tab_all.className = "";
     tab_done.className = "";
@@ -107,7 +107,7 @@ tab_list.addEventListener("click", (e) => {
     render(undone_item);
   } else if (e.target == tab_done) {
     tab_undone.className = "";
-    tab_all.className = "";  
+    tab_all.className = "";
     tab_done.setAttribute("class", "active");
     //下方切換清單顯示的部分整合進來
     done_item = item.filter((i) => i.checked === "checked");
