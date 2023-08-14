@@ -27,13 +27,13 @@ const render = (item) => {
 //可新增代辦事項
 btn_add.addEventListener("click", (e) => {
   e.preventDefault();
-  if (add_Input?.value.trim() == "") {
+  if (add_Input.value.trim() == "") {
     alert("請填寫代辦事項");
     return;
   }
   undone_count++;
   let obj = {};
-  obj.content = add_Input?.value.trim();
+  obj.content = add_Input.value.trim();
   obj.checked = "";
   obj.num = new Date().getTime();
   item.push(obj); //寫進item
